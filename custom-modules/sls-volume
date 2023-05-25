@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# This script is a part of the status bar. It displays current sink volume.
+
+set -oue pipefail
+
+VOLUME=$(pactl get-sink-volume 0 | awk 'NR == 1 { print $5 }' | sed 's/%//g')
+MUTE=$(pactl list sinks | grep "Mute" | awk '{ print $2 }')
+
+if [ "$MUTE" = "yes" ]; then
+    printf "%s" "ﱝ"
+elif [ "$VOLUME" -eq 0 ]; then
+    printf "%s" ""
+elif [ "$VOLUME" -lt 77 ]; then
+    printf "%s" ""
+else
+    printf "%s" ""
+fi

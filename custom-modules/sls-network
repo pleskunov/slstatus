@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# This script is a part of the status bar. It displays the state of the network interfaces.
+# Please, adjust the interface names before using the script.
+
+set -oue pipefail
+
+IFACE_STATE=0
+WIRED_CONNECTION=0
+WIRELESS_CONNECTION=0
+
+ip link show dev "wired-iface-name" | awk 'NR == 1 { print $9 }' | grep -q UP && IFACE_STATE=$((IFACE_STATE+1)) && WIRED_CONNECTION=1
+ip link show dev "wireless-iface-name" | awk 'NR == 1 { print $9 }' | grep -q UP && IFACE_STATE=$((IFACE_STATE+1)) && WIRELESS_CONNECTION=1
+
+if [ "${IFACE_STATE}" -ge 1 ] && [ "$WIRELESS_CONNECTION" = 1 ]; then
+    NETWORK_ICON=""
+    printf " %s" "${NETWORK_ICON}"
+elif [ "${IFACE_STATE}" -ge 1 ] && [ "$WIRED_CONNECTION" = 1 ]; then
+    NETWORK_ICON=""
+    printf " %s" "${NETWORK_ICON}"
+else
+    NETWORK_ICON=""
+    printf " %s" "${NETWORK_ICON}"
+fi

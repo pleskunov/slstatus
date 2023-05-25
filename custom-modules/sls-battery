@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# This script is a part of the status bar. It displays state of the battery.
+
+set -oue pipefail
+
+BATTERY="BAT0"
+
+check_if_present () {
+    IS_PRESENT="$(cat /sys/class/power_supply/${BATTERY}/present 2>&1)"
+}
+
+fetch_bat_info () {
+    BAT_STATUS="$(cat /sys/class/power_supply/${BATTERY}/status 2>&1)"
+    BAT_CAPACITY="$(cat /sys/class/power_supply/${BATTERY}/capacity 2>&1)"
+}
+
+set_bat_capacity_icon () {
+    if [ "${BAT_CAPACITY}" -ge 95 ]; then
+            BAT_ICON=" "
+    elif [ "${BAT_CAPACITY}" -ge 75 ]; then
+            BAT_ICON=" "
+    elif [ "${BAT_CAPACITY}" -ge 50 ]; then
+            BAT_ICON=" "
+    elif [ "${BAT_CAPACITY}" -ge 25 ]; then
+            BAT_ICON=" "
+    elif [ "${BAT_CAPACITY}" -le 5 ]; then
+            BAT_ICON=" "
+    fi
+}
+
+set_bat_status_icon () {
+    case "$BAT_STATUS" in
+	    "Full")         STATUS="F" ;;
+        "Discharging")  STATUS="D" ;;
+        "Charging")     STATUS="C" ;;
+        "Not charging") STATUS="N" ;;
+        "Unknown")      STATUS="?" ;;
+        *)              exit 1    ;;
+    esac
+}
+
+cleanup () {
+    unset BAT_CAPACITY BAT_STATUS BAT_ICON STATUS
+}
+
+main () {
+    if [ "${IS_PRESENT}" = "1" ]; then
+        unset IS_PRESENT
+        fetch_bat_info 
+        set_bat_capacity_icon
+        set_bat_status_icon
+        printf "%s %s %d%%\\n" "${BAT_ICON}" "[${STATUS}]" "${BAT_CAPACITY}"
+        cleanup && exit 0
+    else
+        unset IS_PRESENT
+        printf "%s" "n/a" && exit 1
+
+    fi
+}
+
+check_if_present && main
