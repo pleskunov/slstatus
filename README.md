@@ -12,7 +12,7 @@ In order to build slstatus you need the Xlib header files.
   loaded.
 - For volume percentage on FreeBSD, `sndio` must be installed.
 
-In addition, you will need to install the scripts from `custom-modules` to your `$PATH`, [lm_sensors](https://hwmon.wiki.kernel.org/lm_sensors) and [Roboto Mono Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono) family installed.
+In addition, you will need to install the scripts from `custom-modules` to your `$PATH`, [lm_sensors](https://hwmon.wiki.kernel.org/lm_sensors) and a patched font, for example [Roboto Mono Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono) family.
 
 ## Installation
 ```bash
