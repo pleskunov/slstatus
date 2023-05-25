@@ -84,8 +84,8 @@ static const struct arg args[] = {
     { run_command,   " %s ",         "sensors | awk '/^CPU/ { print $2 }' | tr -d '+'" },   /* CPU temperature */
     { ram_perc,      "  %s%%",      NULL },                                                /* RAM usage */
     { run_command,   " %s",          "sls-network" },                                       /* Network status */
-    { netspeed_rx,   "  %s",        "enp5s0"},                                             /* RX and TX (enp5s0 or wlp3s0) */
-    { netspeed_tx,   "  %sB/s ",    "enp5s0"},
+    { netspeed_rx,   "  %s",        "wired-iface-name"},                                   /* RX and TX (enp5s0 or wlp3s0) */
+    { netspeed_tx,   "  %sB/s ",    "wired-iface-name"},
     { run_command,   " %s ",         "sls-volume" },                                        /* Volume */
     { run_command,   " %s ",         "sls-battery" },                                       /* State of the battery */
     { datetime,      " %s",          "%a %b %d %Y %R" },                                    /* Date and time: WD MMM DD YYYY HH:MM */
